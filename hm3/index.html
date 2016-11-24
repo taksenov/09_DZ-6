@@ -17,13 +17,13 @@
     <section class="header">
         <div class="row">
             <div class="col-md-6 text-center">
-                <button class="btn btn-default" id="download_order_btn">FIRST: Download all cities</button>
+                <button class="btn btn-default" id="downloadThenOrderCities">FIRST: Download all cities</button>
             </div>
             <div class="col-md-6 text-center">
                 <form>
                     <div class="form-group">
                         <label for="exampleInputEmail1">SECOND: search your city</label>
-                        <input type="text" class="form-control" id="search_input_city" placeholder="Search">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search" disabled="disabled">
                     </div>
                 </form>
             </div>
@@ -33,12 +33,12 @@
     <section class="workspace">
         <div class="row" >
             <div class="col-md-6">
-                <ul id="workspace__board_id">
+                <ul id="listOfDownloadedCities">
 
                 </ul>
             </div>
             <div class="col-md-6">
-                <ul id="live_city_search">
+                <ul id="listOfLiveSerchedCities">
 
                 </ul>
             </div>

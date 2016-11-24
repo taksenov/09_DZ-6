@@ -6,15 +6,20 @@
 // в названиях которых есть введенный текст. Использование промисов обязательно.
 // Запрещено использование любых библиотек (включая jQuery) и фреймворков.
 
-// задать переменные
-let downloadBtn = document.getElementById('download_order_btn');
-let parentHTMLInput = document.getElementById('workspace__board_id');
+//todo дать нормальные названия перменным и классам
+
+// задать настройки
+let downloadBtn = document.getElementById('downloadThenOrderCities');
+let downloadUl = document.getElementById('listOfDownloadedCities');
+let searchInput = document.getElementById('searchInput');
+let searchUl = document.getElementById('listOfLiveSerchedCities');
 let url = 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json';
 let method = 'GET';
-let flatList = []; // плоский список городов
+let flatCityList = []; // плоский список городов
+let flatCityListSearch = []; // плоский список отобранных городов
 
 //вспомогательные функции
-function getFlatListElem(node){
+function getflatCityListElem(node){
     let result = [];
     for(let city of node){
         if (city['name']){
@@ -22,7 +27,17 @@ function getFlatListElem(node){
         }
     }
     return result;
-} //getFlatListElem
+} //getflatCityListElem
+
+function searchCity(textInput){
+    let result = [];
+    for(let city of flatCityList){
+        if (~city.toLowerCase().indexOf(textInput.toLowerCase())) {
+            result.push(city);
+        }
+    }
+    return result;
+} //searchCity
 
 function addNewLi(content, parent) {
     var newLi = document.createElement('li');
@@ -48,18 +63,41 @@ function downloadJSON(e, methodXHR, urlXHR) {
     });
 } // downloadJSON
 
+function liveCitySearch( e, searchString ) {
+    searchUl.innerHTML = '';
+    if ( searchString === '' || !searchString ) {
+        searchUl.innerHTML = '';
+        return;
+    }
+    flatCityListSearch = searchCity(searchString);
+    flatCityListSearch = flatCityListSearch.slice().sort();
+    for (let i = 0; i < flatCityListSearch.length; i++) {
+        addNewLi(flatCityListSearch[i], searchUl);
+    }
+    flatCityListSearch = [];
+} // liveCitySearch
+
 //Вызвать событие обработки клика по кнопке
 downloadBtn.addEventListener(
     'click',
     (e) => { downloadJSON(e, method, url)
                 .then(
                     (result) => {
-                        flatList = getFlatListElem(result);
-                        flatList = flatList.slice().sort();
-                        for (let i = 0; i < flatList.length; i++) {
-                            addNewLi(flatList[i], parentHTMLInput);
+                        flatCityList = getflatCityListElem(result);
+                        flatCityList = flatCityList.slice().sort();
+                        for (let i = 0; i < flatCityList.length; i++) {
+                            addNewLi(flatCityList[i], downloadUl);
                         }
+                        searchInput.disabled='';
                     }
                 )
             }
+);
+
+// событие ввода текста для input
+searchInput.addEventListener(
+    'input',
+    (e) => {
+        liveCitySearch(e, searchInput.value );
+    }
 );
