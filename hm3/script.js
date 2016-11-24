@@ -16,9 +16,10 @@ let flatList = []; // плоский список городов
 //вспомогательные функции
 function getFlatListElem(node){
     let result = [];
-    for(let childIndex=0; childIndex < node.length; childIndex++){
-        let currentChildNode = node[childIndex];
-        result.push(currentChildNode.name);
+    for(let city of node){
+        if (city['name']){
+            result.push(city['name']);
+        }
     }
     return result;
 } //getFlatListElem
@@ -32,7 +33,6 @@ function addNewLi(content, parent) {
 // handler для обработки загрузки даных и размещение на странице
 function downloadJSON(e, methodXHR, urlXHR) {
     return new Promise(( resolve, reject) => {
-
         let xhr = new XMLHttpRequest();
         xhr.responseType = 'json';
         xhr.open( methodXHR, urlXHR, true );
@@ -46,7 +46,6 @@ function downloadJSON(e, methodXHR, urlXHR) {
             () => { reject(); }
         );
     });
-
 } // downloadJSON
 
 //Вызвать событие обработки клика по кнопке

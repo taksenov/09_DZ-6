@@ -16,9 +16,10 @@ let flatList = []; // плоский список городов
 //вспомогательные функции
 function getFlatListElem(node){
     let result = [];
-    for(let childIndex=0; childIndex < node.length; childIndex++){
-        let currentChildNode = node[childIndex];
-        result.push(currentChildNode.name);
+    for(let city of node){
+        if (city['name']){
+            result.push(city['name']);
+        }
     }
     return result;
 } //getFlatListElem
