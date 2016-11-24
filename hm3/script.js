@@ -6,8 +6,6 @@
 // в названиях которых есть введенный текст. Использование промисов обязательно.
 // Запрещено использование любых библиотек (включая jQuery) и фреймворков.
 
-//todo дать нормальные названия перменным и классам
-
 // задать настройки
 let downloadBtn = document.getElementById('downloadThenOrderCities');
 let downloadUl = document.getElementById('listOfDownloadedCities');
