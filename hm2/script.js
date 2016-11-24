@@ -8,7 +8,7 @@
 
 // задать переменные
 let downloadBtn = document.getElementById('download_order_btn');
-let parentHTMLInput = document.getElementById('workspace__board_id');
+let parentHTMLUl = document.getElementById('workspace__board_id');
 let url = 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json';
 let method = 'GET';
 let flatList = []; // плоский список городов
@@ -16,9 +16,10 @@ let flatList = []; // плоский список городов
 //вспомогательные функции
 function getFlatListElem(node){
     let result = [];
-    for(let childIndex=0; childIndex < node.length; childIndex++){
-        let currentChildNode = node[childIndex];
-        result.push(currentChildNode.name);
+    for(let city of node){
+        if (city['name']){
+            result.push(city['name']);
+        }
     }
     return result;
 } //getFlatListElem
@@ -58,7 +59,7 @@ downloadBtn.addEventListener(
                         flatList = getFlatListElem(result);
                         flatList = flatList.slice().sort();
                         for (let i = 0; i < flatList.length; i++) {
-                            addNewLi(flatList[i], parentHTMLInput);
+                            addNewLi(flatList[i], parentHTMLUl);
                         }
                     }
                 )
